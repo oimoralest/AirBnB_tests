@@ -17,11 +17,12 @@ function print_ok()
 FILES=(
     README.md AUTHORS ./console.py ./models/base_model.py ./models/__init__.py
     ./models/amenity.py ./models/city.py ./models/place.py ./models/review.py
-    ./models/state.py ./models/ ./models/engine/__init__.py
-    ./tests/tests_models/test_amenity.py ./tests/tests_models/test_base_model.py
-    ./tests/tests_models/test_city ./tests/tests_models/test_place
-    ./tests/tests_models/test_review ./tests/tests_models/test_state
-    ./tests/tests_models/test_user.py
+    ./models/state.py ./models/engine/file_storage.py ./models/engine/__init__.py
+    ./tests/test_models/test_amenity.py ./tests/test_models/test_base_model.py
+    ./tests/test_models/test_city.py ./tests/test_models/test_place.py
+    ./tests/test_models/test_review.py ./tests/test_models/test_state.py
+    ./tests/test_models/test_user.py ./tests/test_models/test_engine/test_file_storage.py
+    ./tests/test_models/__init__.py ./tests/test_models/test_engine/__init__.py
       )
 
 # check_file - Checks if the files exist
