@@ -23,7 +23,7 @@ FILES=(
     ./tests/test_models/test_review.py ./tests/test_models/test_state.py
     ./tests/test_models/test_user.py ./tests/test_models/test_engine/test_file_storage.py
     ./tests/test_models/__init__.py ./tests/test_models/test_engine/__init__.py
-      )
+    )
 
 # check_file - Checks if the files exist
 function check_file()
@@ -50,4 +50,27 @@ function check_shebang()
 {
     return
 }
+# check_permission - Checks if the file have executable permission
+function check_permission()
+{
+    echo "::::::::::::::::::::::::::::"
+    echo "Checking if the file have executable permission"
+    echo "::::::::::::::::::::::::::::"
+    sleep 2
+    for file in "${FILES[@]}"
+        do
+            echo "$file"
+            sleep 1
+            if [ "$file" == "README.md" ] || [ "$file" == "AUTHORS" ]
+                then
+                    continue
+            elif [ -x "$file" ]
+                then
+                    print_ok
+            else
+                print_ko
+            fi
+    done
+}
 check_file
+check_permission
