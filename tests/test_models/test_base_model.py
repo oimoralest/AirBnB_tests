@@ -1,81 +1,171 @@
+#!/usr/bin/python3
+"""
+Unitest Class BaseModel
+"""
 import unittest
-import json
-import datetime
-from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
-import os
+from models.base_model import BaseModel, __doc__ as mrdoc
+import inspect
+# import pep8
+import models
+from datetime import datetime as datetime
 
-class Test_BaseModel(unittest.TestCase):
-    """Test for baseModel"""
-    def setUp(self):
-        """Clean code after each test"""
-        if os.path.isfile("file.json"):
-            os.remove("file.json")
-        FileStorage._FileStorage__objects = {}
 
-    def test_create(self):
-        """Test create"""
-        n_bm = BaseModel()
-        self.assertTrue(type(n_bm.id) == str)
-        self.assertTrue(type(n_bm.created_at) == datetime.datetime)
-        self.assertTrue(type(n_bm.updated_at) == datetime.datetime)
+class TestBaseModel(unittest.TestCase):
+    """
+    Unitest for testing
+    """
+    def test_module_docstring(self):
+        """
+        Tests docstring for module
+        """
+        self.assertTrue(len(mrdoc) > 20)
 
-    def test_str(self):
-        """Test BaseModel representation"""
-        n_bm = BaseModel()
-        self.assertIsInstance(n_bm, BaseModel)
-        self.assertTrue(type(n_bm.__str__()) == str)
-        args = ["wa", 4, 5, "creo", ["dwa", 4]]
-        n_bm = BaseModel(*args)
-        self.assertIsInstance(n_bm, BaseModel)
-        n_bm = BaseModel("wa", 4, 5, "creo", ["dwa", 4])
-        self.assertIsInstance(n_bm, BaseModel)
-        
-    def test_dict(self):
-        """Test BaseModel to_dict method."""
-        n_bm = BaseModel()
-        dictionary = n_bm.to_dict()
-        self.assertTrue(type(dictionary), dict)
-        for key in n_bm.__dict__:
-            self.assertTrue(key in dictionary)
-        self.assertTrue(type(dictionary["created_at"]) == str)
-        self.assertTrue(type(dictionary["updated_at"]) == str)
-        self.assertTrue(dictionary["__class__"])
-        self.assertTrue(dictionary["__class__"] == "BaseModel")
+    def test_class_docstring(self):
+        """
+        Tests docstring for class
+        """
+        self.assertTrue(len(BaseModel.__doc__) > 20)
 
-    def test_kwargs(self):
-        """test for Kwargs"""
-        n_bm = BaseModel({})
-        self.assertTrue(type(n_bm.id) == str)
-        n_bm = BaseModel(**{"age": 315, "food": 4554})
-        self.assertTrue(n_bm.__dict__["age"])
-        self.assertTrue(n_bm.__dict__["food"] == 4554)
-        my_dict = {"id": "097ca1e6-b8b2-4a9e-90ac-d04695eb1622",
-                "created_at": "2016-05-14T21:11:03.285259",
-                "updated_at":
-                datetime.datetime(2020, 11, 2, 10, 00, 00, 459045),
-                "__class__": "death"}
-        n_bm = BaseModel(**my_dict)
-        with self.assertRaises(KeyError) as err:
-            self.assertTrue(n_bm.__dict__["__class__"])
-        id = "097ca1e6-b8b2-4a9e-90ac-d04695eb1622"
-        self.assertTrue(n_bm.__dict__["id"] == id)
-        self.assertIsInstance(n_bm.__dict__["created_at"], datetime.datetime)
-        self.assertIsInstance(n_bm.__dict__["updated_at"], datetime.datetime)
+    def test_methods_docstring(self):
+        """
+        Tests docstring for methods
+        """
+        methods = inspect.getmembers(BaseModel, predicate=inspect.ismethod)
+        for name, func in methods:
+            self.assertTrue(len(func.__doc__) > 20)
+        methods = inspect.getmembers(BaseModel, predicate=inspect.isfunction)
+        for name, func in methods:
+            self.assertTrue(len(func.__doc__) > 20)
 
-    def test_storagemodules(self):
-        """test storemodules for modules"""
-        FS = FileStorage()
-        FS.new(BaseModel())
-        n_bm = BaseModel()
-        id = n_bm.id
-        bm_id = "BaseModel.{}".format(id)
-        self.assertTrue(FS._FileStorage__objects[bm_id])
-        FS.save()
-        with open("file.json", mode="r", encoding="utf-8") as fd:
-            self.assertIsInstance(json.load(fd), dict)
-            entro = 0
-        self.assertTrue(entro == 0)
+    def test_docstring_for_test(self):
+        """
+        Tests docstring for this test
+        """
+        self.assertTrue(len(__doc__) > 20)
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_docstring_class_test(self):
+        """
+        Tests dosctring for class TestBaseModel
+        """
+        self.assertTrue(len(TestBaseModel.__doc__) > 20)
+
+    def test_docstring_methods(self):
+        """
+        Tests docstring for all methods in TestBaseModel class
+        """
+        methods = inspect.getmembers(TestBaseModel, predicate=inspect.ismethod)
+        for name, func in methods:
+            self.assertTrue(len(func.__doc__) > 20)
+
+    """def test_pep8(self):
+        \"""
+        Tests for PEP-8
+        ""\"
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(["models/base_model.py"])
+        self.assertEqual(result.total_errors, 0)
+        """
+
+    def test_base_init(self):
+        """
+        Testing a class BaseModel
+        """
+        instance = BaseModel()
+        self.assertIsInstance(instance, BaseModel)
+        self.assertTrue(issubclass(type(instance), BaseModel))
+        self.assertIs(type(instance), BaseModel)
+
+        instance.name = "Holberton"
+        instance.my_number = 89
+        self.assertEqual(instance.name, "Holberton")
+        self.assertEqual(instance.my_number, 89)
+        """
+        at_class = {
+            "id": str,
+            "created_at": datetime
+            "updated_at": datetime
+            "name": str
+            "my_number": int
+        }
+        """
+
+    def test_none(self):
+        """Check if a new instance is not none"""
+        bm1 = BaseModel()
+        self.assertIsNotNone(bm1)
+
+    def test_uuid(self):
+        """Check ids in the created instances"""
+        bm1 = BaseModel()
+        bm2 = BaseModel()
+        self.assertTrue(hasattr(bm1, "id"))
+        self.assertNotEqual(bm1.id, bm2.id)
+
+    def test_created_at(self):
+        """Check if the instance has created_at Atttibute"""
+        bm1 = BaseModel()
+        bm2 = BaseModel()
+        self.assertTrue(bm1, "created_at")
+        self.assertTrue(bm2, "created_at")
+
+    def test_updated_at(self):
+        """Check if the instance has created_at Atttibute"""
+        bm1 = BaseModel()
+        bm2 = BaseModel()
+        self.assertTrue(bm1, "updated_at")
+        self.assertTrue(bm2, "updated_at")
+
+    def test__str__(self):
+        """Check the string of an created instance"""
+        bm1 = BaseModel()
+        printed = "[{}] ({}) {}".format(
+            bm1.__class__.__name__, bm1.id, bm1.__dict__)
+        self.assertEqual(str(bm1), printed)
+
+    def test_to_dict(self):
+        """Test the to_dict method from BaseModel"""
+        bm1 = BaseModel()
+        bm1_dict = bm1.to_dict()
+        self.assertIsInstance(bm1_dict, dict)
+        self.assertEqual(bm1_dict["__class__"], "BaseModel")
+        self.assertEqual(str(bm1.id), bm1_dict["id"])
+        self.assertIsInstance(bm1_dict["created_at"], str)
+        self.assertIsInstance(bm1_dict["updated_at"], str)
+
+    def test_save(self):
+        """Test to check each update in the storage"""
+        bm1 = BaseModel()
+        self.assertTrue(hasattr(bm1, "updated_at"))
+        bm1.save()
+        self.assertTrue(hasattr(bm1, "updated_at"))
+        t_arg = {'id': 'b6a6e15c-c67d-4312-9a75-9d084935e579',
+                 'create_at': datetime(2017, 9, 28, 21, 5, 54, 119427),
+                 'updated_at': datetime(2017, 9, 28, 21, 5, 54, 119572),
+                 'name': 'bm1'}
+        bm2 = BaseModel(t_arg)
+        bm2.save()
+        last_time = bm2.updated_at
+        bm2.save()
+        self.assertNotEqual(last_time, bm2.updated_at)
+
+    def test_init_from_dict(self):
+        """test to check a new instance witk Kwargs"""
+        my_dict = {'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
+                   'created_at': '2017-09-28T21:03:54.052298',
+                   '__class__': 'BaseModel', 'my_number': 89,
+                   'updated_at': '2017-09-28T21:03:54.052302',
+                   'name': 'Holberton'}
+        bm1 = BaseModel(**my_dict)
+        self.assertIsInstance(bm1, BaseModel)
+        self.assertIsInstance(bm1.id, str)
+        self.assertEqual(bm1.id, '56d43177-cc5f-4d6c-a0c1-e167f8c27337')
+        self.assertIsInstance(bm1.created_at, datetime)
+        self.assertIsInstance(bm1.updated_at, datetime)
+        self.assertIsInstance(bm1.name, str)
+        self.assertEqual(bm1.name, 'Holberton')
+
+    def test_new_attributte(self):
+        """test to check if new attribute  can be added"""
+        bm1 = BaseModel()
+        bm1.name = "Betty"
+        self.assertEqual(bm1.name, "Betty")
