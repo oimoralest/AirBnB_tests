@@ -45,11 +45,6 @@ function check_file()
     done
 }
 
-# check-shebang - Checks if the files contain the shebang #!/usr/bin/python3
-function check_shebang()
-{
-    return
-}
 # check_permission - Checks if the file have executable permission
 function check_permission()
 {
@@ -72,6 +67,8 @@ function check_permission()
             fi
     done
 }
+
+# check-shebang - Checks if the files contain the shebang #!/usr/bin/python3
 function check_shebang()
 {
     echo "::::::::::::::::::::::::::::"
@@ -96,6 +93,6 @@ function check_shebang()
             fi
     done
 }
-check_shebang
 check_file
 check_permission
+check_shebang
