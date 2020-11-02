@@ -72,5 +72,30 @@ function check_permission()
             fi
     done
 }
+function check_shebang()
+{
+    echo "::::::::::::::::::::::::::::"
+    echo "Checking shebang for .py files"
+    echo "::::::::::::::::::::::::::::"
+    shebang="#!/usr/bin/python3"
+    sleep 2
+    for file in "${FILES[@]}"
+        do
+            if [ "$file" == "README.md" ] || [ "$file" == "AUTHORS" ]
+                then
+                    continue
+            fi
+            echo "$file"
+            sleep 1
+            line=$(head -1 "$file")
+            if [ "$line" == "$shebang" ]
+                then
+                    print_ok
+            else
+                print_ko
+            fi
+    done
+}
+check_shebang
 check_file
 check_permission
