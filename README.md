@@ -13,7 +13,7 @@
 
 | File | Description |
 | --- | --- |
-| [checker.sh](./checker) | Checks for general requirements |
+| [checker.sh](./checker.sh) | Checks for general requirements |
 | [tests/](./tests) | Test suite |
 
 # Use
