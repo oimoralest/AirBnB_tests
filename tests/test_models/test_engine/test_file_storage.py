@@ -106,5 +106,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(
             reader[key], TestFileStorage.storage.all()[key].to_dict())
 
+
 if __name__ == '__main__':
     pass
