@@ -19,7 +19,6 @@ class TestFileStorage(unittest.TestCase):
     """
     Unittest for file_storage.py
     """
-    # 1. Crear una instancia de cada modulo: BaseModel, User...
     storage = FileStorage()
     path = storage._FileStorage__file_path
     bm_instance = BaseModel(**my_dict)
