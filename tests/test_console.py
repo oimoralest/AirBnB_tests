@@ -135,6 +135,22 @@ class testCommand(unittest.TestCase):
         value = fd.getvalue()
         self.assertEqual(value, "** value missing **\n")
 
+        with patch('sys.stdout', new=StringIO()) as fd:
+            HBNBCommand().onecmd("create BaseModel")
+        ident = fd.getvalue()
+        self.assertEqual(len(ident), 37)
+
+        with patch('sys.stdout', new=StringIO()) as fd:
+            HBNBCommand().onecmd("update BaseModel {} name 7".format(
+                ident[:-1]))
+        value = fd.getvalue()
+        self.assertEqual("", value)
+
+        with patch('sys.stdout', new=StringIO()) as fd:
+            HBNBCommand().onecmd("show BaseModel {}".format(ident[:-1]))
+        value = fd.getvalue()
+        self.assertTrue("'name': 7" in value)
+
 
 if __name__ == "__main__":
     unittest.main()
