@@ -35,3 +35,7 @@
 - [Valentina Jaramillo Ramirez](https://github.com/valen2510)
 - [Valentina Gomez](https://github.com/Valentinaga1)
 - [Oscar Morales](https://github.com/oimoralest)
+- [Eliana Gomez](https://github.com/ElianaGomez2020)
+- [Sebastian Orozco](https://github.com/oomsebas)
+- [Daniel Villa](https://github.com/Villasdaniel)
+- [Juan José Torres](https://github.com/juanjts)
